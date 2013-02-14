@@ -7,8 +7,8 @@ Now it's only for Rails 3 but support for other Rack applications is in progress
 
 You can use any of available web servers, which provides rack container. Currently available:
 
-- [apache2-passenger]()
-- [nginx-passenger]()
+- [apache2-passenger](https://code.launchpad.net/~pavel-pachkovskij/charms/precise/apache2-passenger/trunk)
+- [nginx-passenger](https://code.launchpad.net/~pavel-pachkovskij/charms/precise/nginx-passenger/trunk)
 
 All examples will use **apache2-passenger**, but you can choose any.
 
@@ -66,7 +66,6 @@ Here is example configuration for Rails 3 installation from svn trunk. Additiona
       app_name: sample-rails
       install_root: /var/www
       extra_packages: imagemagick
-
 
 ## Under the hood
 
