@@ -1,0 +1,8 @@
+#!/bin/bash
+
+source "$(dirname $0)/common.sh"
+
+# this is workaround to allow start application even if redis is not connected yet
+if has_gem 'resque' ; then
+  configure_resque 'localhost' '6379'
+fi

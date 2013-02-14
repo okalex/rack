@@ -1,0 +1,25 @@
+options:
+  app_name:
+    type: string
+    default: sample-rails
+    description: Application Name
+  repo_url:
+    type: string
+    default: "https://github.com/pavelpachkovskij/sample-rails.git"
+    description: Application repository URL
+  repo_branch:
+    type: string
+    default: master
+    description: Application branch name (git only, for bzr the branch is in the url)
+  repo_type:
+    type: string
+    default: git
+    description: Repository type {git|bzr|svn} for now
+  install_root:
+    type: string
+    default: /var/www
+    description: Install the application in app_name under this directory
+  extra_packages:
+    type: string
+    default: ""
+    description: extra packages to install before bundle install
