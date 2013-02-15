@@ -6,4 +6,5 @@ source "$(dirname $0)/common.sh"
 
 ensure_gem 'pg'
 
+# TODO: we need uniq within unit scope but valid postgresql database identifier here
 relation-set database="rails_${RAILS_ENV}"

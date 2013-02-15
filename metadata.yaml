@@ -9,8 +9,9 @@ description: |
   it unifies and distills the API for web servers, web frameworks, and
   software in between (the so-called middleware) into a single method call.
 provides:
-  godrb:
-    interface: godrb
+  god:
+    interface: god
+    scope: container
     optional: true
 requires:
   website:

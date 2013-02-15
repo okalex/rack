@@ -22,4 +22,20 @@ options:
   extra_packages:
     type: string
     default: ""
-    description: extra packages to install before bundle install
+    description: Extra packages to install before bundle install
+  port:
+    type: int
+    default: 80
+    description: Port to run application
+  migrate_database:
+    type: boolean
+    default: true
+    description: Migrate database
+  seed_database:
+    type: boolean
+    default: true
+    description: Seed database
+  compile_assets:
+    type: boolean
+    default: true
+    description: Compile assets

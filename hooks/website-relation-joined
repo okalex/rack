@@ -4,4 +4,4 @@ set -eu
 
 source "$(dirname $0)/common.sh"
 
-relation-set rack_root=$root
+relation-set rack_root=$root rack_port=$port

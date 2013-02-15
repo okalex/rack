@@ -18,6 +18,8 @@ configure_database 'mysql2' "$database" "$host" "$user" "$password"
 
 migrate_database
 
+seed_database
+
 compile_assets
 
 requires_restart

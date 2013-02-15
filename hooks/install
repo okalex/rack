@@ -46,7 +46,9 @@ install_app() {
       fetch_from_svn ;;
   esac
 
-  mkdir $root/tmp
+  mkdir -p $root/config
+  mkdir -p $root/public
+  mkdir -p $root/tmp
   #touch $root/log/production.log
   #chmod 0666 $root/log/production.log
 

@@ -11,25 +11,7 @@ resque_web_port=5678
 exit_if_blank "$resque_host" 'resque host'
 exit_if_blank "$resque_port" 'resque port'
 
-start_resque_web() {
-  juju-log 'Start resque-web'
-  cd $root && RAILS_ENV=production bundle exec resque-web --app-dir ~/.vegas/resque-web -r "$resque_host:$resque_port" -p $resque_web_port
-}
-
-stop_resque_web() {
-  juju-log 'Stop resque-web'
-  cd $root && RAILS_ENV=production bundle exec resque-web --app-dir ~/.vegas/resque-web -K
-}
-
-restart_resque_web() {
-  stop_resque_web
-  start_resque_web
-}
-
 configure_resque $resque_host $resque_port
-
-#restart_resque
-#restart_resque_web
 
 open-port $resque_web_port
 

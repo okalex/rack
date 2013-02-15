@@ -4,6 +4,10 @@ repo_url=`config-get repo_url`
 repo_branch=`config-get repo_branch`
 repo_type=`config-get repo_type`
 extra_packages=`config-get extra_packages`
+port=`config-get port`
+migrate_database=`config-get migrate_database`
+seed_database=`config-get seed_database`
+compile_assets=`config-get compile_assets`
 
 root="$install_root/$app_name"
 
@@ -46,18 +50,24 @@ EOS
 }
 
 migrate_database() {
-  juju-log "Migrate database"
-  cd $root && bundle exec rake db:migrate
+  if [[ $migrate_database == 'True' ]]; then
+    juju-log "Migrate database"
+    cd $root && bundle exec rake db:migrate
+  fi
 }
 
 seed_database() {
-  juju-log "Seed database"
-  cd $root && bundle exec rake db:seed
+  if [[ $seed_database == 'True' ]]; then
+    juju-log "Seed database"
+    cd $root && bundle exec rake db:seed
+  fi
 }
 
 compile_assets() {
-  juju-log 'Compile assets'
-  cd $root && bundle exec rake assets:precompile
+  if [[ $compile_assets == 'True' ]]; then
+    juju-log 'Compile assets'
+    cd $root && bundle exec rake assets:precompile
+  fi
 }
 
 # global methods
