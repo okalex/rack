@@ -24,11 +24,6 @@ $RAILS_ENV:
 EOS
 }
 
-create_mongoid_indexes() {
-  juju-log 'Create mongoid indexes'
-  cd $root && bundle exec rake db:mongoid:create_indexes
-}
-
 configure_mongoid
 
 create_mongoid_indexes

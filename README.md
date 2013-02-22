@@ -6,8 +6,8 @@ Rack applications subordinate [Juju Charm](http://jujucharms.com/). Works only w
 
 You can use any of available web servers, which provides rack container. Currently available:
 
-- [apache2-passenger](https://code.launchpad.net/~pavel-pachkovskij/charms/precise/apache2-passenger/trunk)
-- [nginx-passenger](https://code.launchpad.net/~pavel-pachkovskij/charms/precise/nginx-passenger/trunk)
+- [apache2-passenger](http://jujucharms.com/~pavel-pachkovskij/precise/apache2-passenger)
+- [nginx-passenger](http://jujucharms.com/charms/precise/nginx-passenger)
 
 All examples will use **apache2-passenger**, but you can choose any.
 

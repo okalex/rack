@@ -52,22 +52,35 @@ EOS
 migrate_database() {
   if [[ $migrate_database == 'True' ]]; then
     juju-log "Migrate database"
-    cd $root && bundle exec rake db:migrate
+    wrap_rake db:migrate
   fi
 }
 
 seed_database() {
   if [[ $seed_database == 'True' ]]; then
     juju-log "Seed database"
-    cd $root && bundle exec rake db:seed
+    wrap_rake db:seed
   fi
 }
 
 compile_assets() {
   if [[ $compile_assets == 'True' ]]; then
     juju-log 'Compile assets'
-    cd $root && bundle exec rake assets:precompile
+    wrap_rake assets:precompile
   fi
+}
+
+create_mongoid_indexes() {
+  juju-log 'Create mongoid indexes'
+  wrap_rake db:mongoid:create_indexes
+}
+
+run_rake() {
+  cd $root && bundle exec rake $1
+}
+
+wrap_rake() {
+  run_rake $1 || juju-log "Your either do not have Rake installed or trying to run task that doesn't exist."
 }
 
 # global methods
