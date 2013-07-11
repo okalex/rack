@@ -8,6 +8,8 @@ description: |
   By wrapping HTTP requests and responses in the simplest way possible,
   it unifies and distills the API for web servers, web frameworks, and
   software in between (the so-called middleware) into a single method call.
+categories:
+    - app-servers
 provides:
   god:
     interface: god
