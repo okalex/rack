@@ -1,41 +1,37 @@
 options:
-  app_name:
+  repo:
     type: string
-    default: sample-rails
-    description: Application Name
-  repo_url:
-    type: string
-    default: "https://github.com/pavelpachkovskij/sample-rails.git"
+    default:
     description: Application repository URL
-  repo_branch:
+  revision:
     type: string
-    default: master
-    description: Application branch name (git only, for bzr the branch is in the url)
-  repo_type:
+    default: HEAD
+    description: "The revision to be checked out. This can be symbolic, like HEAD or it can be a source control management-specific revision identifier."
+  scm_provider:
     type: string
     default: git
-    description: Repository type {git|bzr|svn} for now
-  install_root:
+    description: The name of the source control management provider to be used (git or svn).
+  deploy_key:
     type: string
-    default: /var/www
-    description: Install the application in app_name under this directory
+    default:
+    description: A deploy key is an SSH key that is stored on the server and grants access to a repository (git only).
+  svn_username:
+    type: string
+    default:
+    description: The password for the user that has access to the Subversion repository (svn only).
+  svn_password:
+    type: string
+    default:
+    description: The user name for a user that has access to the Subversion repository (svn only).
+  rack_env:
+    type: string
+    default: production
+    description: Both RACK_ENV and RAILS_ENV environment variables.
   extra_packages:
     type: string
-    default: ""
+    default:
     description: Extra packages to install before bundle install
-  port:
-    type: int
-    default: 80
-    description: Port to run application
-  migrate_database:
-    type: boolean
-    default: true
-    description: Migrate database
-  seed_database:
-    type: boolean
-    default: true
-    description: Seed database
-  compile_assets:
-    type: boolean
-    default: true
-    description: Compile assets
+  env:
+    type: string
+    default:
+    description: "List of environment variables (e.g. SECRET_TOKEN=secret_token). These variables will override those which were set by Rack charm (like DATABASE_URL, REDIS_URL)"

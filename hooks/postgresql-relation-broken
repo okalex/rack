@@ -1,9 +1,1 @@
-#!/bin/bash
-
-set -eu
-
-source "$(dirname $0)/common.sh"
-
-configure_database 'postgresql' "" "" "" ""
-
-requires_restart
+stub
