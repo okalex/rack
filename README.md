@@ -12,51 +12,51 @@ Configure your application, for example:
 
 **sample-rails.yml**
 
-```yml
+```
 sample-rails:
   repo: https://github.com/pavelpachkovskij/sample-rails
 ```
 
 Deploy Rack application:
 
-```shell
+```
 juju deploy rack sample-rails --config sample-rails.yml
 ```
 
 Deploy and relate database
 
-```shell
+```
 juju deploy postgresql
 juju add-relation postgresql:db sample-rails
 ```
 
 Now you can run migrations:
 
-```shell
+```
 juju ssh sample-rails/0 run rake db:migrate
 ```
 
 Seed database
 
-```shell
+```
 juju ssh sample-rails/0 run rake db:seed
 ```
 
 And finally expose the Rack service:
 
-```shell
+```
 juju expose rack
 ```
 
 Find the Rack instance's public URL from
 
-```shell
+```
 juju status
 ```
 
 ### MySQL setup
 
-```shell
+```
 juju deploy mysql
 juju add-relation mysql rack
 ```
@@ -67,38 +67,38 @@ Configure your application, for example html2haml
 
 **html2haml.yml**
 
-```yml
+```
 html2haml:
   repo: https://github.com/twilson63/html2haml.git
 ```
 
 Deploy your Rack service
 
-```shell
+```
 juju deploy rack html2haml --config html2haml.yml
 ```
 
 Expose Rack service:
 
-```shell
+```
 juju expose html2haml
 ```
 
 ## Source code updates
 
-```shell
+```
 juju set <service_name> revision=<revision>
 ```
 
 ## Executing commands
 
-```shell
+```
 juju ssh <unit_name> run <command>
 ```
 
 ## Restart application
 
-```bash
+```
 juju ssh <unit_name> sudo restart rack
 ```
 
@@ -115,7 +115,7 @@ Example Procfile:
 
 You can use the ruby keyword of your app's Gemfile to specify a particular version of Ruby.
 
-```ruby
+```
 source "https://rubygems.org"
 ruby "1.9.3"
 ```
@@ -126,7 +126,7 @@ Juju makes it easy to scale your Rack application. You can simply deploy any sup
 
 ## HAProxy
 
-```shell
+```
 juju deploy rack rack --config rack.yml
 juju deploy haproxy
 juju add-relation haproxy rack
@@ -141,7 +141,7 @@ Here is a quick example of using Apache2 as a load balancer with your rack appli
 
 Deploy Rack application
 
-```shell
+```
 juju deploy rack --config rack.yml
 ```
 
@@ -149,20 +149,20 @@ You have to enable mod_proxy_balancer and mod_proxy_http modules in your Apache2
 
 **apache2.yml** example
 
-```yaml
+```
 apache2:
   enable_modules: proxy_balancer proxy_http
 ```
 
 Deploy Apache2
 
-```shell
+```
 juju deploy apache2 --config apache2.yml
 ```
 
 Create balancer relation between Apache2 and Rack application
 
-```shell
+```
 juju add-relation apache2:balancer rack
 ```
 
@@ -170,7 +170,7 @@ Apache2 charm expects a template to be passed in. Example of vhost that will bal
 
 **vhost.tmpl**
 
-```xml
+```
 <VirtualHost *:80>
   ServerName rack
   ProxyPass / balancer://rack/ lbmethod=byrequests stickysession=BALANCEID
@@ -180,13 +180,13 @@ Apache2 charm expects a template to be passed in. Example of vhost that will bal
 
 Update Apache2 service config with this template
 
-```shell
+```
 juju set apache2 "vhost_http_template=$(base64 < vhost.tmpl)"
 ```
 
 Expose Apache2 service
 
-```shell
+```
 juju expose apache2
 ```
 
@@ -194,7 +194,7 @@ juju expose apache2
 
 You can add logstash service to collect information from application's logs and Kibana application to visualize this data.
 
-```shell
+```
 juju deploy kibana
 juju deploy logstash-indexer
 juju add-relation kibana logstash-indexer:rest
@@ -210,14 +210,14 @@ juju expose kibana
 
 You can can perform HTTP checks with Nagios. To do this deploy Nagios and relate it to your Rack application:
 
-```shell
+```
 juju deploy nagios
 juju add-relation rack nagios
 ```
 
 Additionally you can perform disk, mem, and swap checks with NRPE extension:
 
-```shell
+```
 juju deploy nrpe
 juju add-relation rack nrpe
 juju add-relation nrpe nagios
@@ -232,7 +232,7 @@ Deploy MonogDB service and relate it to Rack application:
 
 Rack charm will set environment variables which you can use to configure your Mongodb adapter.
 
-```ruby
+```
 MONGODB_URL   => mongodb://host:port/database
 ```
 
@@ -240,7 +240,7 @@ MONGODB_URL   => mongodb://host:port/database
 
 Your mongoid.yml should look like:
 
-```yml
+```
 production:
   uri: <%= ENV['MONGODB_URL'] %>
 ```
@@ -249,7 +249,7 @@ production:
 
 Your mongoid.yml should look like:
 
-```yml
+```
 production:
   sessions:
     default:
@@ -262,14 +262,14 @@ In both cases you can set additional options specified by Mongoid.
 
 Deploy Memcached service and relate it to Rack application:
 
-```shell
+```
 juju deploy memcached
 juju add-relation memcached rack
 ```
 
 Rack charm will set environment variables which you can use to configure your Memcache adapter. [Dalli](https://github.com/mperham/dalli) use those variables by default.
 
-```ruby
+```
 MEMCACHE_PASSWORD    => xxxxxxxxxxxx
 MEMCACHE_SERVERS     => instance.hostname.net
 MEMCACHE_USERNAME    => xxxxxxxxxxxx
@@ -279,20 +279,20 @@ MEMCACHE_USERNAME    => xxxxxxxxxxxx
 
 Deploy Redis service and relate it to Rack application:
 
-```bash
+```
 juju deploy redis-master
 juju add-relation redis-master:redis-master rack
 ```
 
 Rack charm will set environment variables which you can use to configure your Redis adapter.
 
-```ruby
+```
 REDIS_URL   => redis://username:password@my.host:6389
 ```
 
 For example you can configure Redis adapter in config/initializers/redis.rb
 
-```ruby
+```
 uri = URI.parse(ENV["REDIS_URL"])
 REDIS = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
 ```
@@ -303,19 +303,19 @@ REDIS = Redis.new(:host => uri.host, :port => uri.port, :password => uri.passwor
 
 To be able to compile assets before you've joined database relation you have to disable initialize_on_precompile option in application.rb:
 
-```ruby
+```
 config.assets.initialize_on_precompile = false
 ```
 
 If you can't do this you still can join database and compile assets manually:
 
-```bash
+```
 juju ssh rack/0 run rake assets:precompile
 ```
 
 Then restart Rack service (while you have to replace 'rack/0' with your application name, e.g. 'sample-rails/0', 'sudo restart rack' is a valid command to restart any deployed application):
 
-```bash
+```
 juju ssh rack/0 sudo restart rack
 ```
 
@@ -325,7 +325,7 @@ juju ssh rack/0 sudo restart rack
 
 Sample Git config:
 
-```yml
+```
 rack:
   repo: <repository_url>
   revision: <revision_number>
@@ -333,7 +333,7 @@ rack:
 
 To deploy from private repo via SSH add 'deploy_key' option:
 
-```yml
+```
   deploy_key: <private_key>
 ```
 
@@ -341,7 +341,7 @@ To deploy from private repo via SSH add 'deploy_key' option:
 
 Sample SVN config:
 
-```yml
+```
 rack:
   scm_provider: svn
   repo: <repository_url>
@@ -354,7 +354,7 @@ rack:
 
 Specify list of packages separated by spaces:
 
-```yml
+```
   extra_packages: 'libsqlite3++-dev libmagick++-dev'
 ```
 
@@ -362,6 +362,6 @@ Specify list of packages separated by spaces:
 
 You can set ENV variables, which will be available within all processes defined in a Procfile:
 
-```yml
+```
   env: 'AWS_ACCESS_KEY_ID=aws_access_key_id AWS_SECRET_ACCESS_KEY=aws_secret_access_key'
 ```
