@@ -2,24 +2,25 @@
 set -e
 
 export HOME=/root
-export HOOKS_DIR=$( cd "$( dirname "$0" )" && pwd)
 
 apt-get update
 apt-get install -y curl build-essential
 
-curl -L https://get.rvm.io | bash -s stable --ruby
+$CHARM_DIR/hooks/rvm-installer.sh stable
 
 export PATH=$PATH:/usr/local/rvm/bin
 source /usr/local/rvm/scripts/rvm
 
-cd "$(dirname $0)" && bundle install
+rvm install ruby --default
+rvm use ruby
+
+cd $CHARM_DIR/hooks && bundle install
 
 rvm wrapper ruby juju chef-solo bundle
 
 configure_chef_solo() {
   cat > /etc/chef/solo.rb <<EOF
-cookbook_path '$HOOKS_DIR/chef/cookbooks'
-data_bag_path '$HOOKS_DIR/chef/data_bags'
+cookbook_path '$CHARM_DIR/cookbooks'
 EOF
 }
 
