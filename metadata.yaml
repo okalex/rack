@@ -1,7 +1,6 @@
 name: rack
-subordinate: true
 summary: A modular Ruby webserver interface
-maintainer: Altoros Systems, Inc. <pavel.pachkovskij@altoros.com>
+maintainer: "Altoros Systems, Inc. <pavel.pachkovskij@altoros.com>"
 description: |
   Rack provides a minimal, modular and adaptable interface
   for developing web applications in Ruby.
@@ -9,25 +8,28 @@ description: |
   it unifies and distills the API for web servers, web frameworks, and
   software in between (the so-called middleware) into a single method call.
 categories:
-    - app-servers
+  - app-servers
 provides:
-  god:
-    interface: god
+  proxy:
+    interface: http
+  nagios:
+    interface: monitors
+  nrpe:
+    interface: local-monitors
     scope: container
-    optional: true
 requires:
-  rack-server:
-    interface: rack
-    scope:  container
-  mysql:
-    interface: mysql
-    optional: true
   postgresql:
     interface: pgsql
     optional: true
-  resque:
-    interface: redis
+  mysql:
+    interface: mysql
     optional: true
-  mongoid:
+  mongodb:
     interface: mongodb
+    optional: true
+  memcached:
+    interface: memcache
+    optional: true
+  redis:
+    interface: redis
     optional: true
